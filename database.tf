@@ -26,27 +26,27 @@ resource "aws_security_group" "rds" {
 }
 
 resource "aws_db_instance" "main" {
-  identifier              = "${local.prefix}-db"
-  name                    = var.db.name
-  allocated_storage       = 20
-  storage_type            = "gp2"
-  engine                  = "postgres"
-  engine_version          = "11.15"
-  instance_class          = "db.t2.micro"
-  db_subnet_group_name    = aws_db_subnet_group.main.name
-  password                = var.db_password
-  username                = var.db_username
+  identifier           = "${local.prefix}-db"
+  name                 = var.db.name
+  allocated_storage    = 20
+  storage_type         = "gp2"
+  engine               = "postgres"
+  engine_version       = "11.15"
+  instance_class       = "db.t2.micro"
+  db_subnet_group_name = aws_db_subnet_group.main.name
+  password             = var.db_password
+  username             = var.db_username
 
   // set retention period for prod env
   backup_retention_period = 0
 
   // set multi AZ to true for prod
-  multi_az                = false
+  multi_az = false
 
   // set skip final snapshot to false for prod (avoid data loss, create final snapshot incase of delete action)
-  skip_final_snapshot     = true
+  skip_final_snapshot = true
 
-  vpc_security_group_ids  = [aws_security_group.rds.id]
+  vpc_security_group_ids = [aws_security_group.rds.id]
 
   tags = merge(
     local.common_tags,
