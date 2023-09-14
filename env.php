@@ -1,2 +1,2 @@
-env=main
-branch=main
+env=dev
+branch=dev
